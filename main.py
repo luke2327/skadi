@@ -1,5 +1,6 @@
 from selenium import webdriver
-from lib.champions_dict import champions_info_match_kr
+from flask import jsonify
+import lib.champions_dict as champions_info
 
 path = "C:/chromedriver/chromedriver.exe"
 
@@ -18,12 +19,14 @@ def get_champions_info(champions_name):
 
 
 def get_champions_info_by_dict(champions_name):
-    if champions_info_match_kr[champions_name]:
-        url = champions_info_match_kr[champions_name]
+    if champions_info.champions_info_match_kr[champions_name]:
+        champions_original_name = \
+            champions_info.champions_info_match_kr[champions_name]
 
-        driver_access(url)
+        champions_desc = \
+            champions_info.champions_story_kr[champions_original_name]
 
-        return url
+        return jsonify({'champions_desc': champions_desc})
 
 
 def driver_access(url):
