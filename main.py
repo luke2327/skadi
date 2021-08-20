@@ -1,5 +1,6 @@
 from selenium import webdriver
 from flask import jsonify
+from db.query import execute
 import lib.champions_dict as champions_info
 
 path = "C:/chromedriver/chromedriver.exe"
@@ -22,6 +23,12 @@ def get_champions_info_by_dict(champions_name):
     if champions_info.champions_info_match_kr[champions_name]:
         champions_original_name = \
             champions_info.champions_info_match_kr[champions_name]
+
+        print(champions_original_name)
+
+        query = f"INSERT INTO temp(testval) VALUES(\"{champions_original_name}\")"
+
+        execute(query=query)
 
         champions_desc = \
             champions_info.champions_story_kr[champions_original_name]

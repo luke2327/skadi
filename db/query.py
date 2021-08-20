@@ -3,7 +3,7 @@ import json
 
 
 def connect_db():
-    with open('../lib/db_config.json', 'r', encoding='utf-8') as db_config:
+    with open('lib/db_config.json', 'r', encoding='utf-8') as db_config:
         db_config = json.load(db_config)
 
         conn = pymysql.connect(
@@ -19,7 +19,7 @@ def connect_db():
     return {'curs': curs, 'conn': conn}
 
 
-def execute(self, query):
+def execute(query):
     connect_info = connect_db()
     conn = connect_info['conn']
     curs = connect_info['curs']
