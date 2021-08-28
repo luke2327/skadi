@@ -1,9 +1,10 @@
 import pymysql.cursors
 import json
+import os
 
 
 def connect_db():
-    with open('lib/db_config.json', 'r', encoding='utf-8') as db_config:
+    with open(os.path.abspath('db_config.json'), 'r', encoding='utf-8') as db_config:
         db_config = json.load(db_config)
 
         conn = pymysql.connect(
@@ -31,3 +32,5 @@ def execute(query):
 
     finally:
         conn.close()
+
+connect_db()
