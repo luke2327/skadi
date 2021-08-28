@@ -1,9 +1,9 @@
 from selenium import webdriver
 from flask import jsonify
 from db.query import execute
-import lib.champions_dict as champions_info
+from crawl.default import driver_access
 
-path = "C:/chromedriver/chromedriver.exe"
+import lib.champions_dict as champions_info
 
 
 def get_champions_info(champions_name: str):
@@ -24,20 +24,16 @@ def get_champions_info_by_dict(champions_name: str):
         champions_original_name = \
             champions_info.champions_info_match_kr[champions_name]
 
-        print(champions_original_name)
-
-        query = f'INSERT INTO temp(testval) VALUES(`{champions_original_name}`)'
-
-        execute(query=query)
-
         champions_desc = \
             champions_info.champions_story_kr[champions_original_name]
 
         return jsonify({'champions_desc': champions_desc})
 
 
-def driver_access(url):
-    driver = webdriver.Chrome(path)
-    driver.get(url)
+def query_test(champions_name: str):
+    champions_original_name = \
+        champions_info.champions_info_match_kr[champions_name]
 
-    return driver
+    query = f'INSERT INTO temp(testval) VALUES(`{champions_original_name}`)'
+
+    execute(query=query)
